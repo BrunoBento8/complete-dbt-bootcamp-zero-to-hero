@@ -1,5 +1,6 @@
 {{ config(
   materialized = 'table',
+  tags = ["mart", "mart_fullmoon_reviews"]
 ) }}
 
 WITH fct_reviews AS (
@@ -20,4 +21,4 @@ FROM
   r
   LEFT JOIN full_moon_dates
   fm
-  ON (TO_DATE(r.review_date) = DATEADD(DAY, 1, fm.full_moon_date))
+  ON (r.review_date = (fm.full_moon_date + 1))

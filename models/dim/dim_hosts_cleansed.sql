@@ -1,6 +1,7 @@
 {{
   config(
-    materialized = 'view'
+    materialized = 'table',
+    tags = ["dim", "dim_hosts_cleansed"]
     )
 }} 
 WITH src_hosts AS (
@@ -11,7 +12,7 @@ WITH src_hosts AS (
 )
 SELECT
     host_id,
-    NVL(
+    coalesce(
         host_name,
         'Anonymous'
     ) AS host_name,
